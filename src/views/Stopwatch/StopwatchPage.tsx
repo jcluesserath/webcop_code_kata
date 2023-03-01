@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styles from "@/views/Container/ContainerPage.module.scss";
-export const ContainerPage: React.FC = () => {
+import styles from "@/views/Stopwatch/StopwatchPage.module.scss";
+
+export const StopwatchPage: React.FC = () => {
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
   const [isActive, setIsActive] = useState<boolean>(false);
