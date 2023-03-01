@@ -1,6 +1,7 @@
-import { act, render, screen } from "@testing-library/react";
-import { expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import { ContainerPage } from "@/views/Container/ContainerPage";
+import userEvent from "@testing-library/user-event";
+import { expect } from "vitest";
 
 describe("Container check", () => {
   it("shows the headline of the page", async () => {
@@ -54,13 +55,46 @@ describe("Container check", () => {
     const startButtonElement = await screen.findByRole("button", {
       name: "Start",
     });
-    act(() => {
-      startButtonElement.click();
-    });
-    const startTime = await screen.findByText("00:01");
 
-    expect(startTime).toBeInTheDocument();
+    await userEvent.click(startButtonElement);
+
+  const stopWatchTime = await screen.findByText("00:02");
+
+  expect(stopWatchTime).toBeInTheDocument();
+
 
   });
-  it("", )
+  it("stops the stopwatch if we press the stop button", async () => {
+    render(<ContainerPage />);
+
+    const startButtonElement = await screen.findByRole("button", {
+      name: "Start",
+    });
+    const stopButtonElement = await screen.findByRole("button", {
+      name: "Stop",
+    });
+    await userEvent.click(startButtonElement);
+
+
+    await userEvent.click(stopButtonElement);
+
+    const stopWatchTime = await screen.findByText("00:01");
+
+    expect(stopWatchTime).toBeInTheDocument();
+  });
+  it("resets the stopwatch if we press the reset button", async () =>{
+    render(<ContainerPage />);
+    const startButtonElement = await screen.findByRole("button", {
+      name: "Start",
+    });
+    const resetButtonElement = await screen.findByRole("button", {
+      name: "Reset",
+    });
+    await userEvent.click(startButtonElement);
+    await userEvent.click(resetButtonElement);
+
+    const stopWatchTime = await screen.findByText("00:00");
+
+    expect(stopWatchTime).toBeInTheDocument();
+  })
 });
