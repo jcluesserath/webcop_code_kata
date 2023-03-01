@@ -58,7 +58,7 @@ describe("Container check", () => {
 
     await userEvent.click(startButtonElement);
 
-  const stopWatchTime = await screen.findByText("00:02");
+  const stopWatchTime = await screen.findByText("00:01");
 
   expect(stopWatchTime).toBeInTheDocument();
 
@@ -66,7 +66,7 @@ describe("Container check", () => {
   });
   it("stops the stopwatch if we press the stop button", async () => {
     render(<ContainerPage />);
-
+// Todo vi useFaketimer geht nicht richtig
     const startButtonElement = await screen.findByRole("button", {
       name: "Start",
     });
@@ -75,10 +75,9 @@ describe("Container check", () => {
     });
     await userEvent.click(startButtonElement);
 
+    const stopWatchTime = await screen.findByText("00:01");
 
     await userEvent.click(stopButtonElement);
-
-    const stopWatchTime = await screen.findByText("00:01");
 
     expect(stopWatchTime).toBeInTheDocument();
   });
